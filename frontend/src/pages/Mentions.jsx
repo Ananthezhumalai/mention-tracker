@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { getMentions, createMention, deleteMention, uploadMentionsCsv, getViews, createView, getBrands } from '../api';
+import { getMentions, createMention, deleteMention, uploadMentionsCsv, getViews, createView, getBrands, deleteSavedView } from '../api';
 import { useParams } from 'react-router-dom';
 import { format } from 'date-fns';
 import { Search, Filter, Download, Upload, Plus, Save, Trash2, X, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -90,7 +90,7 @@ export default function Mentions() {
   };
 
   const deleteView = async (id) => {
-    await fetch(`http://localhost:5000/api/views/${id}`, { method: 'DELETE' });
+    await deleteSavedView(id);
     loadViews();
   }
 

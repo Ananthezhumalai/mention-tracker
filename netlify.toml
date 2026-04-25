@@ -1,0 +1,14 @@
+[build]
+  # The directory where the build command should be run
+  base = "frontend"
+  # The directory that contains the deploy-ready static files
+  publish = "dist"
+  # The command to run to build the site
+  command = "npm run build"
+
+[[redirects]]
+  # This rule ensures that if a user refreshes the page on a sub-route (e.g., /dashboard),
+  # Netlify will serve the index.html file instead of a 404 page.
+  from = "/*"
+  to = "/index.html"
+  status = 200
