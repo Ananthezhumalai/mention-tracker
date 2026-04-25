@@ -109,7 +109,7 @@ export async function updateMention(id, updatedFields) {
 }
 
 // Bulk upload mentions from a CSV or JSON file
-export async function bulkUploadFile(brandId, file) {
+export async function uploadMentionsCsv(brandId, file) {
   // FormData is used when sending a file — not regular JSON
   const formData = new FormData();
   formData.append('brandId', brandId);
@@ -130,14 +130,14 @@ export async function bulkUploadFile(brandId, file) {
 // ─────────────────────────────────────────
 
 // Get all saved views for a brand
-export async function getSavedViews(brandId) {
+export async function getViews(brandId) {
   const response = await fetch(`${API_URL}/views?brandId=${brandId}`);
   const data = await response.json();
   return data;
 }
 
 // Save a new filter combination with a name
-export async function createSavedView(brandId, name, filters) {
+export async function createView({ brandId, name, filters }) {
   const response = await fetch(`${API_URL}/views`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
