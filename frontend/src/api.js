@@ -1,7 +1,7 @@
 // This file contains all the functions that talk to our backend API.
 // Every function uses fetch() to make HTTP requests and returns the response as JSON.
 
-const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+const API_URL = 'http://localhost:5000/api';
 
 // ─────────────────────────────────────────
 // BRAND functions
