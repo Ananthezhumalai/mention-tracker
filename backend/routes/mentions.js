@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 const Mention = require('../models/Mention');
 const { startOfDay, subDays, endOfDay } = require('date-fns');
 const papaparse = require('papaparse');
@@ -50,15 +51,15 @@ router.get('/dashboard', async (req, res) => {
     const [total, sentimentCounts, sourceCounts, topTagsObj, recentMentions] = await Promise.all([
       Mention.countDocuments({ brandId }),
       Mention.aggregate([
-        { $match: { brandId: new require('mongoose').Types.ObjectId(brandId) } },
+        { $match: { brandId: new mongoose.Types.ObjectId(brandId) } },
         { $group: { _id: '$sentiment', count: { $sum: 1 } } }
       ]),
       Mention.aggregate([
-        { $match: { brandId: new require('mongoose').Types.ObjectId(brandId) } },
+        { $match: { brandId: new mongoose.Types.ObjectId(brandId) } },
         { $group: { _id: '$source', count: { $sum: 1 } } }
       ]),
       Mention.aggregate([
-        { $match: { brandId: new require('mongoose').Types.ObjectId(brandId) } },
+        { $match: { brandId: new mongoose.Types.ObjectId(brandId) } },
         { $unwind: '$tags' },
         { $group: { _id: '$tags', count: { $sum: 1 } } },
         { $sort: { count: -1 } },
@@ -68,7 +69,7 @@ router.get('/dashboard', async (req, res) => {
       Mention.aggregate([
         { 
           $match: { 
-            brandId: new require('mongoose').Types.ObjectId(brandId),
+            brandId: new mongoose.Types.ObjectId(brandId),
             postedAt: { $gte: subDays(startOfDay(new Date()), 30) }
           }
         },
